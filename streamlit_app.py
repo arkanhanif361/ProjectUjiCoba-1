@@ -19,13 +19,16 @@ st.markdown(multi)
 
 import streamlit as st
 
-md = st.text_area('Type in your markdown string (without outer quotes)',
-                  "Happy Streamlit-ing! :balloon:")
+col1, col2, col3 = st.columns(3)
 
-st.code(f"""
-import streamlit as st
+with col1:
+    st.header("A cat")
+    st.image("https://static.streamlit.io/examples/cat.jpg")
 
-st.markdown('''{md}''')
-""")
+with col2:
+    st.header("A dog")
+    st.image("https://static.streamlit.io/examples/dog.jpg")
 
-st.markdown(md)
+with col3:
+    st.header("An owl")
+    st.image("https://static.streamlit.io/examples/owl.jpg")
