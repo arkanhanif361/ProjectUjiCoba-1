@@ -3,32 +3,50 @@ import streamlit as st
 st.title("🎈 EEEEE A")
 import streamlit as st
 
-st.markdown("*Streamlit* is **really** ***cool***.")
-st.markdown('''
-    :red[Streamlit] :orange[can] :green[write] :blue[text] :violet[in]
-    :gray[pretty] :rainbow[colors] and :blue-background[highlight] text.''')
-st.markdown("Here's a bouquet &mdash;\
-            :tulip::cherry_blossom::rose::hibiscus::sunflower::blossom:")
+# 1. Judul Aplikasi
+st.title("🔢 Kalkulator Sederhana")
+st.write("Aplikasi kalkulator interaktif menggunakan Streamlit.")
 
-multi = '''If you end a line with two spaces,
-a soft return is used for the next line.
+# Buat garis pembatas
+st.divider()
 
-Two (or more) newline characters in a row will result in a hard return.
-'''
-st.markdown(multi)
+# 2. Input Angka dari User
+# min_value=None artinya bisa input angka negatif maupun positif
+angka_pertama = st.number_input("Masukkan angka pertama:", value=0.0, step=1.0)
+angka_kedua = st.number_input("Masukkan angka kedua:", value=0.0, step=1.0)
 
-import streamlit as st
+# 3. Pilihan Operasi Matematika
+operasi = st.selectbox(
+    "Pilih operasi matematika:",
+    ("Pertambahan (+)", "Pengurangan (-)", "Perkalian (×)", "Pembagian (÷)")
+)
 
-col1, col2, col3 = st.columns(3)
+# Buat tombol untuk memicu kalkulasi
+hitung = st.button("Hitung Hasil")
 
-with col1:
-    st.header("A cat")
-    st.image("https://static.streamlit.io/examples/cat.jpg")
+# 4. Logika Kalkulator
+if hitung:
+    hasil = 0
+    error_message = None
 
-with col2:
-    st.header("A dog")
-    st.image("https://static.streamlit.io/examples/dog.jpg")
+    if operasi == "Pertambahan (+)":
+        hasil = angka_pertama + angka_kedua
+    elif operasi == "Pengurangan (-)":
+        hasil = angka_pertama - angka_kedua
+    elif operasi == "Perkalian (×)":
+        hasil = angka_pertama * angka_kedua
+    elif operasi == "Pembagian (÷)":
+        # Antisipasi error pembagian dengan angka nol
+        if angka_kedua != 0:
+            hasil = angka_pertama / angka_kedua
+        else:
+            error_message = "❌ Error: Tidak bisa membagi dengan angka nol!"
 
-with col3:
-    st.header("An owl")
-    st.image("https://static.streamlit.io/examples/owl.jpg")
+    # 5. Menampilkan Hasil
+    st.divider()
+    if error_message:
+        st.error(error_message)
+    else:
+        # Menampilkan hasil dengan format box sukses yang menarik
+        st.success(f"Hasil dari {angka_pertama} jika diselesaikan dengan {operasi} bersama {angka_kedua} adalah:")
+        st.metric(label="Hasil Akhir", value=f"{hasil:,}")
